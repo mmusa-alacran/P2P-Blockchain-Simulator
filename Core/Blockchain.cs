@@ -81,7 +81,7 @@ namespace CsharpBlockchainNode.Core
       /// These transactions will be included in the next mined block.
       public void AddTransaction(Transaction transaction)
       {
-         // Here you would typically add validation for the transaction,
+         // Here we would typically add validation for the transaction,
          // e.g., checking if the sender has enough balance.
          // For this project, we'll keep it simple.
          _pendingTransactions.Add(transaction);
