@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "WYuWskTacOHQrxsLWaxAp7ao+T/77S0qtjVDMKA0rs7lAA2L58eGk7yoBnBlJFNovkAMvkpySc/9EiW1MqQp4g==",
+  "dgSpecHash": "SGnkLNeKJyw=",
   "success": true,
-  "projectFilePath": "C:\\Users\\mmx\\Documents\\Workspace\\CsharpBlockchain\\CsharpBlockchainNode\\CsharpBlockchainNode.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "/home/alacran/Documents/Workspace/C#/Project/P2P-Blockchain-Simulator/CsharpBlockchainNode/CsharpBlockchainNode.csproj",
+  "expectedPackageFiles": [
+    "/home/alacran/.nuget/packages/microsoft.netcore.app.ref/8.0.16/microsoft.netcore.app.ref.8.0.16.nupkg.sha512",
+    "/home/alacran/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.16/microsoft.aspnetcore.app.ref.8.0.16.nupkg.sha512",
+    "/home/alacran/.nuget/packages/microsoft.netcore.app.host.linux-x64/8.0.16/microsoft.netcore.app.host.linux-x64.8.0.16.nupkg.sha512"
+  ],
   "logs": []
 }

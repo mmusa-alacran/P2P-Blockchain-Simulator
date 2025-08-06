@@ -1,36 +1,37 @@
 {
   "version": 3,
   "targets": {
-    "net5.0": {}
+    "net8.0": {}
   },
   "libraries": {},
   "projectFileDependencyGroups": {
-    "net5.0": []
+    "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\mmx\\.nuget\\packages\\": {}
+    "/home/alacran/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mmx\\Documents\\Workspace\\CsharpBlockchain\\CsharpBlockchainNode\\CsharpBlockchainNode.csproj",
+      "projectUniqueName": "/home/alacran/Documents/Workspace/C#/Project/P2P-Blockchain-Simulator/CsharpBlockchainNode/CsharpBlockchainNode.csproj",
       "projectName": "CsharpBlockchainNode",
-      "projectPath": "C:\\Users\\mmx\\Documents\\Workspace\\CsharpBlockchain\\CsharpBlockchainNode\\CsharpBlockchainNode.csproj",
-      "packagesPath": "C:\\Users\\mmx\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mmx\\Documents\\Workspace\\CsharpBlockchain\\CsharpBlockchainNode\\obj\\",
+      "projectPath": "/home/alacran/Documents/Workspace/C#/Project/P2P-Blockchain-Simulator/CsharpBlockchainNode/CsharpBlockchainNode.csproj",
+      "packagesPath": "/home/alacran/.nuget/packages/",
+      "outputPath": "/home/alacran/Documents/Workspace/C#/Project/P2P-Blockchain-Simulator/CsharpBlockchainNode/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\mmx\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/home/alacran/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
-        "net5.0"
+        "net8.0"
       ],
       "sources": {
+        "/usr/lib/dotnet/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "net5.0": {
-          "targetAlias": "net5.0",
+        "net8.0": {
+          "targetAlias": "net8.0",
           "projectReferences": {}
         }
       },
@@ -38,21 +39,42 @@
         "warnAsError": [
           "NU1605"
         ]
-      }
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      },
+      "SdkAnalysisLevel": "9.0.100"
     },
     "frameworks": {
-      "net5.0": {
-        "targetAlias": "net5.0",
+      "net8.0": {
+        "targetAlias": "net8.0",
         "imports": [
           "net461",
           "net462",
           "net47",
           "net471",
           "net472",
-          "net48"
+          "net48",
+          "net481"
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[8.0.16, 8.0.16]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.linux-x64",
+            "version": "[8.0.16, 8.0.16]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[8.0.16, 8.0.16]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -61,7 +83,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/9.0.106/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

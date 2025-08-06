@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "E9lLeL4phLQBhFqRkenpfzw9lB/fGfbrUlndbggW3Zw=",
+  "Source": "CsharpBlockchainNode",
+  "BasePath": "_content/CsharpBlockchainNode",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

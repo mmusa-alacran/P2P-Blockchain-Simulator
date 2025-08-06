@@ -27,7 +27,15 @@ namespace CsharpBlockchainNode.Core
       private Block CreateGenesisBlock()
       {
          var transactions = new List<Transaction> { new("system", "genesis", 0) };
-         return new Block(0, DateTimeOffset.UtcNow.ToUnixTimeSeconds(), transactions, "0");
+
+         // We hardcode the timestamp to ensure the genesis block hash is always the same.
+         // This timestamp is arbitrary (it's Jan 1, 2023).
+         const long genesisTimestamp = 1672531200;
+         var genesisBlock = new Block(0, genesisTimestamp, transactions, "0");
+         
+         // In a real blockchain, the genesis block's hash might also be hardcoded
+         // after being calculated once, but calculating it here is fine for our purposes.
+         return genesisBlock;
       }
 
       /// Gets the most recent block in the chain.
