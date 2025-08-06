@@ -20,8 +20,10 @@ public class NodeService
     /// Broadcasts a newly mined block to all known peers in the network.
     public async Task BroadcastNewBlockAsync(Block block)
     {
-        // Get the list of peer nodes from our configuration
+        // Get the list of peer nodes and this node's own URL from configuration
         var peerNodes = _configuration.GetSection("PeerNodes").Get<string[]>();
+        var selfUrl = _configuration.GetValue<string>("NodeUrl");
+
         if (peerNodes == null)
         {
             Console.WriteLine("No peer nodes configured.");
@@ -33,17 +35,20 @@ public class NodeService
 
         foreach (var peer in peerNodes)
         {
+            // Don't broadcast to yourself
+            if (peer.Equals(selfUrl, StringComparison.OrdinalIgnoreCase))
+            {
+                continue;
+            }
+            
             try
             {
                 Console.WriteLine($"Broadcasting new block to {peer}...");
-                // Send the block to the peer's '/announce-block' endpoint
                 var response = await _httpClient.PostAsync($"{peer}/announce-block", content);
                 response.EnsureSuccessStatusCode();
             }
             catch (Exception ex)
             {
-                // If we can't connect to a peer, just log it and continue.
-                // In a real blockchain, we would have more robust retry/disconnect logic.
                 Console.WriteLine($"Failed to broadcast to {peer}. Reason: {ex.Message}");
             }
         }
