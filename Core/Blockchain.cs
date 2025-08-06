@@ -32,7 +32,7 @@ namespace CsharpBlockchainNode.Core
          // This timestamp is arbitrary (it's Jan 1, 2023).
          const long genesisTimestamp = 1672531200;
          var genesisBlock = new Block(0, genesisTimestamp, transactions, "0");
-         
+
          // In a real blockchain, the genesis block's hash might also be hardcoded
          // after being calculated once, but calculating it here is fine for our purposes.
          return genesisBlock;
@@ -125,6 +125,56 @@ namespace CsharpBlockchainNode.Core
          }
 
          return true;
+      }
+      
+      
+      /// Validates the integrity of a given blockchain.
+      /// This is an overload IsChainValid method used by the consensus algorithm.
+      /// param: chainToValidate - The chain to validate.
+      /// returns True if the chain is valid, false otherwise.
+      public bool IsChainValid(List<Block> chainToValidate)
+      {
+         // Check if the genesis block is the same
+         // For simplicity, we can serialize them to JSON and compare strings.
+         if (JsonSerializer.Serialize(chainToValidate[0]) != JsonSerializer.Serialize(Chain[0]))
+         {
+            return false;
+         }
+
+         for (int i = 1; i < chainToValidate.Count; i++)
+         {
+            var currentBlock = chainToValidate[i];
+            var previousBlock = chainToValidate[i - 1];
+
+            if (currentBlock.Hash != currentBlock.CalculateHash())
+            {
+               return false;
+            }
+            if (currentBlock.PreviousHash != previousBlock.Hash)
+            {
+               return false;
+            }
+         }
+         return true;
+      }
+      
+      
+      /// Replaces the current node's chain with a new one, but only if the new chain
+      /// is longer and valid. This is the core of the consensus algorithm.
+      /// param: newChain - The candidate chain to replace the current one.
+      /// returns True if the chain was replaced, false otherwise.
+      public bool ReplaceChain(List<Block> newChain)
+      {
+         // A new chain is only valid if it's longer than the current one
+         // and if the chain itself is valid.
+         if (newChain.Count > Chain.Count && IsChainValid(newChain)) // We'll create an overload for IsChainValid
+         {
+            Console.WriteLine("Received a longer valid chain. Replacing the current chain.");
+            Chain = newChain;
+            return true;
+         }
+
+         return false;
       }
    }
 }
