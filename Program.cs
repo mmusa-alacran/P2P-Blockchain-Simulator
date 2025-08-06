@@ -46,7 +46,8 @@ app.MapPost("/mine", async (Blockchain blockCoin, NodeService nodeService) =>
 
 // POST /announce-block
 // This is a new endpoint for a node to receive a block from a peer.
-app.MapPost("/announce-block", (Block block, Blockchain blockCoin) => {
+app.MapPost("/announce-block", (Block block, Blockchain blockCoin) =>
+{
     // Basic validation: check if the new block's previous hash matches our latest block's hash
     var latestBlock = blockCoin.GetLatestBlock();
     if (block.PreviousHash == latestBlock.Hash)
@@ -59,6 +60,20 @@ app.MapPost("/announce-block", (Block block, Blockchain blockCoin) => {
 
     Console.WriteLine($"Rejected new block {block.Index} from peer.");
     return Results.BadRequest(new { message = "Block rejected." });
+});
+
+// GET /nodes/resolve
+// Triggers the consensus algorithm to resolve conflicts.
+app.MapGet("/nodes/resolve", async (Blockchain blockCoin, NodeService nodeService) =>
+{
+    bool chainReplaced = await nodeService.ResolveConflictsAsync(blockCoin);
+
+    if (chainReplaced)
+    {
+        return Results.Ok(new { message = "Our chain was replaced.", chain = blockCoin.Chain });
+    }
+
+    return Results.Ok(new { message = "Our chain is authoritative.", chain = blockCoin.Chain });
 });
 
 
