@@ -1,6 +1,7 @@
 using System.Text;
 using System.Text.Json;
 using CsharpBlockchainNode.Models;
+using CsharpBlockchainNode.Core;
 
 namespace CsharpBlockchainNode.Services;
 
