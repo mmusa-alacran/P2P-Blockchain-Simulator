@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using CsharpBlockchainNode.Models;
+using System.Text.Json; 
 
 namespace CsharpBlockchainNode.Core
 {
@@ -158,7 +159,7 @@ namespace CsharpBlockchainNode.Core
          return true;
       }
       
-      
+
       /// Replaces the current node's chain with a new one, but only if the new chain
       /// is longer and valid. This is the core of the consensus algorithm.
       /// param: newChain - The candidate chain to replace the current one.
