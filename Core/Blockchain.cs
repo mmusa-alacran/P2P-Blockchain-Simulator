@@ -53,41 +53,48 @@ namespace CsharpBlockchainNode.Core
       /// The address of the miner who will receive the mining reward.
       public void MinePendingTransactions(string minerAddress)
       {
-         // Add the mining reward transaction. The miner gets rewarded for their work.
-         var rewardTransaction = new Transaction("system", minerAddress, 1); // coin reward
-         _pendingTransactions.Add(rewardTransaction);
+         // Create the single mining reward transaction for this block.
+         const double rewardAmount = 1; // 1 coin reward
+         var rewardTransaction = new Transaction("system", minerAddress, rewardAmount);
 
+         // Create a new list containing all pending transactions plus the new reward transaction.
+         // This ensures the reward is part of this block only.
+         var blockTransactions = new List<Transaction>(_pendingTransactions)
+         {
+            rewardTransaction
+         };
+
+         // Create the new block with the complete transaction list.
          var newBlock = new Block(
-             index: GetLatestBlock().Index + 1,
-             timestamp: DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
-             // Add all pending transactions
-             transactions: new List<Transaction>(_pendingTransactions),
-             previousHash: GetLatestBlock().Hash
+            index: GetLatestBlock().Index + 1,
+            timestamp: DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
+            transactions: blockTransactions,
+            previousHash: GetLatestBlock().Hash
          );
 
+         // Mine the block (Proof of Work).
          MineBlock(newBlock);
 
-         Console.WriteLine("Block successfully mined. Updating balances...");
-            
-            // Process all transactions in the block and update wallet balances
-            foreach (var tx in _pendingTransactions)
+         Console.WriteLine("Block successfully mined. Adding to chain and updating balances...");
+         
+         // Add the successfully mined block to the chain.
+         Chain.Add(newBlock);
+
+         // AFTER the block is confirmed on the chain, update all wallet balances.
+         foreach (var tx in blockTransactions)
+         {
+            if (tx.From != "system") // Don't subtract from the "system" wallet
             {
-                var fromBalance = _walletService.GetBalance(tx.From);
-                var toBalance = _walletService.GetBalance(tx.To);
-                
-                _walletService.SetBalance(tx.From, fromBalance - tx.Amount);
-                _walletService.SetBalance(tx.To, toBalance + tx.Amount);
+                  var fromBalance = _walletService.GetBalance(tx.From);
+                  _walletService.SetBalance(tx.From, fromBalance - tx.Amount);
             }
             
-            // Add the mining reward transaction and update the miner's balance
-            var rewardAmount = 1; // 1 coin reward
-            var minerBalance = _walletService.GetBalance(minerAddress);
-            _walletService.SetBalance(minerAddress, minerBalance + rewardAmount);
-            
-            newBlock.Transactions.Add(new Transaction("system", minerAddress, rewardAmount));
-            
-            Chain.Add(newBlock);
-            _pendingTransactions.Clear();
+            var toBalance = _walletService.GetBalance(tx.To);
+            _walletService.SetBalance(tx.To, toBalance + tx.Amount);
+         }
+         
+         // Clear the original pending transactions pool for the next block.
+         _pendingTransactions.Clear();
       }
 
       /// Implements the Proof of Work algorithm.
