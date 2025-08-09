@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CsharpBlockchainNode")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4d2ae056f189e45d3874225189f34c70fd4f7cbd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8a3caea4811ab0d81d76530592bbc8c9eda0dc2c")]
 [assembly: System.Reflection.AssemblyProductAttribute("CsharpBlockchainNode")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CsharpBlockchainNode")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
