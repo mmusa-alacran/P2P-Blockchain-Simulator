@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using CsharpBlockchainNode.Models;
 using System.Text.Json; 
+using CsharpBlockchainNode.Services;
 
 namespace CsharpBlockchainNode.Core
 {
@@ -10,15 +11,17 @@ namespace CsharpBlockchainNode.Core
    {
       private readonly List<Transaction> _pendingTransactions = new();
       private readonly int _difficulty;
+      private readonly WalletService _walletService;
 
       /// The list of all blocks in the chain. This is the ledger itself.
       public List<Block> Chain { get; private set; }
 
       /// Initializes a new blockchain, setting the difficulty and creating the genesis block.
       /// The number of leading zeros required for a valid hash.
-      public Blockchain(int difficulty)
+      public Blockchain(int difficulty, WalletService walletService)
       {
          _difficulty = difficulty;
+         _walletService = walletService;
          Chain = new List<Block> { CreateGenesisBlock() };
       }
 
@@ -64,10 +67,27 @@ namespace CsharpBlockchainNode.Core
 
          MineBlock(newBlock);
 
-         Chain.Add(newBlock);
-
-         // Clear the pending transactions list as they are now included in the chain.
-         _pendingTransactions.Clear();
+         Console.WriteLine("Block successfully mined. Updating balances...");
+            
+            // Process all transactions in the block and update wallet balances
+            foreach (var tx in _pendingTransactions)
+            {
+                var fromBalance = _walletService.GetBalance(tx.From);
+                var toBalance = _walletService.GetBalance(tx.To);
+                
+                _walletService.SetBalance(tx.From, fromBalance - tx.Amount);
+                _walletService.SetBalance(tx.To, toBalance + tx.Amount);
+            }
+            
+            // Add the mining reward transaction and update the miner's balance
+            var rewardAmount = 1; // 1 coin reward
+            var minerBalance = _walletService.GetBalance(minerAddress);
+            _walletService.SetBalance(minerAddress, minerBalance + rewardAmount);
+            
+            newBlock.Transactions.Add(new Transaction("system", minerAddress, rewardAmount));
+            
+            Chain.Add(newBlock);
+            _pendingTransactions.Clear();
       }
 
       /// Implements the Proof of Work algorithm.
@@ -86,14 +106,32 @@ namespace CsharpBlockchainNode.Core
       }
 
 
-      /// Adds a new transaction to the list of pending transactions.
-      /// These transactions will be included in the next mined block.
-      public void AddTransaction(Transaction transaction)
+      /// Adds a new transaction, but only if it's valid.
+      /// param: "transaction", the transaction to validate and add.
+      /// returns True if the transaction is valid, false otherwise.
+      public bool AddTransaction(Transaction transaction)
       {
-         // Here we would typically add validation for the transaction,
-         // e.g., checking if the sender has enough balance.
-         // For this project, we'll keep it simple.
+         if (string.IsNullOrEmpty(transaction.From) || string.IsNullOrEmpty(transaction.To))
+         {
+            Console.WriteLine("Transaction validation failed: From/To address cannot be empty.");
+            return false;
+         }
+
+         if (transaction.Amount <= 0)
+         {
+            Console.WriteLine("Transaction validation failed: Amount must be greater than zero.");
+            return false;
+         }
+
+         var senderBalance = _walletService.GetBalance(transaction.From);
+         if (senderBalance < transaction.Amount)
+         {
+            Console.WriteLine($"Transaction validation failed: Insufficient balance. Sender has {senderBalance}, needs {transaction.Amount}.");
+            return false;
+         }
+
          _pendingTransactions.Add(transaction);
+         return true;
       }
 
       /// Validates the integrity of the entire blockchain.
