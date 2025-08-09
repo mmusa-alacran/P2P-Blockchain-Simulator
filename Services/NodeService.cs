@@ -5,48 +5,35 @@ using CsharpBlockchainNode.Core;
 
 namespace CsharpBlockchainNode.Services;
 
-
 /// Handles all peer-to-peer (P2P) networking logic.
 public class NodeService
 {
-    private readonly HttpClient _httpClient;
+    private readonly HttpClient _httpClient = new();
     private readonly IConfiguration _configuration;
 
     public NodeService(IConfiguration configuration)
     {
-        _httpClient = new HttpClient();
         _configuration = configuration;
     }
 
     /// Broadcasts a newly mined block to all known peers in the network.
-    public async Task BroadcastNewBlockAsync(Block block)
+    public async Task BroadcastNewBlockAsync(Block block, string selfUrl)
     {
         // Get the list of peer nodes and this node's own URL from configuration
         var peerNodes = _configuration.GetSection("PeerNodes").Get<string[]>();
-        var selfUrl = _configuration.GetValue<string>("NodeUrl");
-
-        if (peerNodes == null)
-        {
-            Console.WriteLine("No peer nodes configured.");
-            return;
-        }
+        if (peerNodes == null) return;
 
         var json = JsonSerializer.Serialize(block);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
         foreach (var peer in peerNodes)
         {
-            // Don't broadcast to yourself
-            if (peer.Equals(selfUrl, StringComparison.OrdinalIgnoreCase))
-            {
-                continue;
-            }
-
+            if (peer.Equals(selfUrl, StringComparison.OrdinalIgnoreCase)) continue;
+            
             try
             {
                 Console.WriteLine($"Broadcasting new block to {peer}...");
-                var response = await _httpClient.PostAsync($"{peer}/announce-block", content);
-                response.EnsureSuccessStatusCode();
+                await _httpClient.PostAsync($"{peer}/announce-block", content);
             }
             catch (Exception ex)
             {
@@ -54,50 +41,52 @@ public class NodeService
             }
         }
     }
-    
+
 
     /// Queries all peer nodes for their chains and replaces the local chain
     /// if a longer, valid chain is found.
-    /// param: blockCoin - The local blockchain instance.
-    /// returns True if the local chain was replaced, false otherwise.
-    public async Task<bool> ResolveConflictsAsync(Blockchain blockCoin)
+    public async Task<bool> ResolveConflictsAsync(Blockchain blockCoin, string selfUrl)
     {
+        Console.WriteLine("--- Starting Conflict Resolution ---");
         var peerNodes = _configuration.GetSection("PeerNodes").Get<string[]>();
-        if (peerNodes == null) return false;
+        if (peerNodes == null || !peerNodes.Any()) return false;
 
+        Console.WriteLine($"Found {peerNodes.Length} peer(s) to query.");
         List<Block>? longestChain = null;
         int maxLength = blockCoin.Chain.Count;
+        Console.WriteLine($"Current chain length is {maxLength}.");
 
         foreach (var peer in peerNodes)
         {
+                if (peer.Equals(selfUrl, StringComparison.OrdinalIgnoreCase)) continue;
             try
             {
                 Console.WriteLine($"Querying chain from peer: {peer}...");
-                // Get the chain from the peer
                 var response = await _httpClient.GetAsync($"{peer}/chain");
-                response.EnsureSuccessStatusCode();
-
+                if (!response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine($"Failed to get chain from {peer}. Status: {response.StatusCode}");
+                    continue;
+                }
                 var peerChain = await response.Content.ReadFromJsonAsync<List<Block>>();
-
-                // Check if the peer's chain is longer and valid
                 if (peerChain != null && peerChain.Count > maxLength && blockCoin.IsChainValid(peerChain))
                 {
+                    Console.WriteLine($"Found a longer, valid chain from {peer}.");
                     maxLength = peerChain.Count;
                     longestChain = peerChain;
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Failed to query chain from {peer}. Reason: {ex.Message}");
+                Console.WriteLine($"!! EXCEPTION while querying {peer}. Reason: {ex.Message}");
             }
         }
 
-        // If we found a valid chain longer than our own, replace ours
         if (longestChain != null)
         {
             return blockCoin.ReplaceChain(longestChain);
         }
-
+        Console.WriteLine("--- Conflict Resolution Finished ---");
         return false;
     }
 }

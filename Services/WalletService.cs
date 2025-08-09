@@ -12,7 +12,7 @@ public class WalletService
 
     /// Creates a new wallet with an initial balance or retrieves it if it already exists.
     /// param: "publicKey", the unique public address for the wallet.
-    /// <returns>The created or retrieved wallet.</returns>
+    /// returns the created or retrieved wallet.</returns>
     public Wallet GetOrCreateWallet(string publicKey)
     {
         // This will add the wallet if it doesn't exist, or just return the existing one if it does.
