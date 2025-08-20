@@ -36,4 +36,16 @@ public class WalletService
         var wallet = GetOrCreateWallet(publicKey);
         wallet.Balance = newBalance;
     }
+
+
+    /// Loads a dictionary of wallets into the service, overwriting any existing data.
+    /// Used when loading state from disk.
+    public void LoadWallets(IDictionary<string, Wallet> walletsToLoad)
+    {
+        _wallets.Clear();
+        foreach (var walletEntry in walletsToLoad)
+        {
+            _wallets.TryAdd(walletEntry.Key, walletEntry.Value);
+        }
+    }
 }
