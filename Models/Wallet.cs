@@ -1,16 +1,20 @@
 namespace CsharpBlockchainNode.Models;
 
-/// Represents a user's wallet, tracking their public address and balance.
 public class Wallet
 {
-    /// The public address of the wallet, used as a unique identifier.
-    public string PublicKey { get; }
+    /// The public address of the wallet.
+    /// 'init' allows this to be set during object creation/deserialization,
+    /// but makes it read-only afterwards.
+    public required string PublicKey { get; init; }
+
     /// The current balance of the wallet.
     public double Balance { get; set; }
 
-    public Wallet(string publicKey, double initialBalance = 0)
+    /// This constructor is now compatible with the JSON deserializer because
+    /// the parameter name 'balance' matches the property name 'Balance' (case-insensitive).
+    public Wallet(string publicKey, double balance = 0)
     {
         PublicKey = publicKey;
-        Balance = initialBalance;
+        Balance = balance;
     }
 }
