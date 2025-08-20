@@ -8,7 +8,7 @@ namespace CsharpBlockchainNode.Services;
 public class WalletService
 {
     // A thread-safe dictionary to store wallets, mapping public keys (addresses) to Wallet objects.
-    private readonly ConcurrentDictionary<string, Wallet> _wallets = new();
+    internal readonly ConcurrentDictionary<string, Wallet> _wallets = new();
 
     /// Creates a new wallet with an initial balance or retrieves it if it already exists.
     /// param: "publicKey", the unique public address for the wallet.
