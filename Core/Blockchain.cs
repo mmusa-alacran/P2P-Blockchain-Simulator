@@ -16,13 +16,22 @@ namespace CsharpBlockchainNode.Core
       /// The list of all blocks in the chain. This is the ledger itself.
       public List<Block> Chain { get; private set; }
 
-      /// Initializes a new blockchain, setting the difficulty and creating the genesis block.
-      /// The number of leading zeros required for a valid hash.
-      public Blockchain(int difficulty, WalletService walletService)
+      // This constructor is used to initialize the blockchain from a saved state.
+      public Blockchain(int difficulty, WalletService walletService, List<Block>? initialChain)
       {
          _difficulty = difficulty;
          _walletService = walletService;
-         Chain = new List<Block> { CreateGenesisBlock() };
+
+         if (initialChain != null && initialChain.Any())
+         {
+            Chain = initialChain;
+         }
+         else
+         { 
+            // If no chain is provided, create the genesis block.
+            Chain = new List<Block> { CreateGenesisBlock() };
+         }
+         
       }
 
 
