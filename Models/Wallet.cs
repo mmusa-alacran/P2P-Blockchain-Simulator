@@ -1,18 +1,15 @@
 namespace CsharpBlockchainNode.Models;
 
+/// <summary>Simple wallet model: address + decimal balance.</summary>
 public class Wallet
 {
-    /// The public address of the wallet.
-    /// 'init' allows this to be set during object creation/deserialization,
-    /// but makes it read-only afterwards.
+    /// <summary>Public address (identifier) of the wallet.</summary>
     public string PublicKey { get; init; }
 
-    /// The current balance of the wallet.
-    public double Balance { get; set; }
+    /// <summary>Current balance (decimal to avoid floating rounding).</summary>
+    public decimal Balance { get; set; }
 
-    /// This constructor is now compatible with the JSON deserializer because
-    /// the parameter name 'balance' matches the property name 'Balance' (case-insensitive).
-    public Wallet(string publicKey, double balance = 0)
+    public Wallet(string publicKey, decimal balance = 0m)
     {
         PublicKey = publicKey;
         Balance = balance;

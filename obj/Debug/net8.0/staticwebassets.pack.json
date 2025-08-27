@@ -1,0 +1,29 @@
+{
+  "Files": [
+    {
+      "Id": "/home/alacran/Documents/Workspace/C#/Project/P2P-Blockchain-Simulator/wwwroot/index.html",
+      "PackagePath": "staticwebassets/index.html"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.CsharpBlockchainNode.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.CsharpBlockchainNode.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.build.CsharpBlockchainNode.props",
+      "PackagePath": "build\\CsharpBlockchainNode.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.CsharpBlockchainNode.props",
+      "PackagePath": "buildMultiTargeting\\CsharpBlockchainNode.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.CsharpBlockchainNode.props",
+      "PackagePath": "buildTransitive\\CsharpBlockchainNode.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

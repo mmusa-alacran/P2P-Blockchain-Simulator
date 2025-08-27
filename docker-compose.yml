@@ -1,0 +1,41 @@
+services:
+  node1:
+    build: .
+    image: p2p-blockchain-simulator-node1
+    container_name: p2p-node1
+    environment:
+      # Kestrel in-container port
+      ASPNETCORE_URLS: "http://+:5000"
+      # The node's own public URL (host side)
+      NodeUrl: "http://localhost:5001"
+      # Peers: other node (by service DNS name) + self
+      PeerNodes__0: "http://node2:5000"
+      PeerNodes__1: "http://localhost:5001"
+      Blockchain__Difficulty: "3"
+    ports:
+      - "5001:5000"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:5000/healthz"]
+      interval: 20s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
+
+  node2:
+    build: .
+    image: p2p-blockchain-simulator-node2
+    container_name: p2p-node2
+    environment:
+      ASPNETCORE_URLS: "http://+:5000"
+      NodeUrl: "http://localhost:5002"
+      PeerNodes__0: "http://node1:5000"
+      PeerNodes__1: "http://localhost:5002"
+      Blockchain__Difficulty: "3"
+    ports:
+      - "5002:5000"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:5000/healthz"]
+      interval: 20s
+      timeout: 5s
+      start_period: 10s
+      retries: 3

@@ -1,6 +1,6 @@
-namespace CsharpBlockchainNode.Models
-{
-/// Represents a transaction using a record type,
-/// which provides immutable properties and value-based equality.
-public record Transaction(string From, string To, double Amount);
-}
+namespace CsharpBlockchainNode.Models;
+
+/// <summary>
+/// Immutable money transfer between two addresses. Amount is decimal for precision.
+/// </summary>
+public readonly record struct Transaction(string From, string To, decimal Amount);

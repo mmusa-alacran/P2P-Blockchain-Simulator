@@ -1,12 +1,125 @@
 {
   "Version": 1,
-  "Hash": "E9lLeL4phLQBhFqRkenpfzw9lB/fGfbrUlndbggW3Zw=",
+  "Hash": "ri4vJeazfp23sjxZr+zidDjc/WrdDsbjEXwd5ULmSjA=",
   "Source": "CsharpBlockchainNode",
   "BasePath": "_content/CsharpBlockchainNode",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": [],
-  "Endpoints": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "CsharpBlockchainNode/wwwroot",
+      "Source": "CsharpBlockchainNode",
+      "ContentRoot": "/home/alacran/Documents/Workspace/C#/Project/P2P-Blockchain-Simulator/wwwroot/",
+      "BasePath": "_content/CsharpBlockchainNode",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "/home/alacran/Documents/Workspace/C#/Project/P2P-Blockchain-Simulator/wwwroot/index.html",
+      "SourceId": "CsharpBlockchainNode",
+      "SourceType": "Discovered",
+      "ContentRoot": "/home/alacran/Documents/Workspace/C#/Project/P2P-Blockchain-Simulator/wwwroot/",
+      "BasePath": "_content/CsharpBlockchainNode",
+      "RelativePath": "index#[.{fingerprint}]?.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "h113q9payx",
+      "Integrity": "+6kmQ+YEC7nNyfkh/ntI1YkZM2wU7glyWxkHjLtw6i4=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/index.html"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "index.h113q9payx.html",
+      "AssetFile": "/home/alacran/Documents/Workspace/C#/Project/P2P-Blockchain-Simulator/wwwroot/index.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4424"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"+6kmQ+YEC7nNyfkh/ntI1YkZM2wU7glyWxkHjLtw6i4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 27 Aug 2025 20:42:16 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "h113q9payx"
+        },
+        {
+          "Name": "label",
+          "Value": "index.html"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-+6kmQ+YEC7nNyfkh/ntI1YkZM2wU7glyWxkHjLtw6i4="
+        }
+      ]
+    },
+    {
+      "Route": "index.html",
+      "AssetFile": "/home/alacran/Documents/Workspace/C#/Project/P2P-Blockchain-Simulator/wwwroot/index.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4424"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"+6kmQ+YEC7nNyfkh/ntI1YkZM2wU7glyWxkHjLtw6i4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 27 Aug 2025 20:42:16 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-+6kmQ+YEC7nNyfkh/ntI1YkZM2wU7glyWxkHjLtw6i4="
+        }
+      ]
+    }
+  ]
 }
