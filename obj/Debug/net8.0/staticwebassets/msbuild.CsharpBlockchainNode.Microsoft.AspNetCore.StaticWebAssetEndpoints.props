@@ -1,0 +1,16 @@
+﻿<Project>
+  <ItemGroup>
+    <StaticWebAssetEndpoint Include="_content/CsharpBlockchainNode/index.h113q9payx.html">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\index.html'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"h113q9payx"},{"Name":"integrity","Value":"sha256-\u002B6kmQ\u002BYEC7nNyfkh/ntI1YkZM2wU7glyWxkHjLtw6i4="},{"Name":"label","Value":"_content/CsharpBlockchainNode/index.html"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"4424"},{"Name":"Content-Type","Value":"text/html"},{"Name":"ETag","Value":"\u0022\u002B6kmQ\u002BYEC7nNyfkh/ntI1YkZM2wU7glyWxkHjLtw6i4=\u0022"},{"Name":"Last-Modified","Value":"Wed, 27 Aug 2025 20:42:16 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/CsharpBlockchainNode/index.html">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\index.html'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-\u002B6kmQ\u002BYEC7nNyfkh/ntI1YkZM2wU7glyWxkHjLtw6i4="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"4424"},{"Name":"Content-Type","Value":"text/html"},{"Name":"ETag","Value":"\u0022\u002B6kmQ\u002BYEC7nNyfkh/ntI1YkZM2wU7glyWxkHjLtw6i4=\u0022"},{"Name":"Last-Modified","Value":"Wed, 27 Aug 2025 20:42:16 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+  </ItemGroup>
+</Project>

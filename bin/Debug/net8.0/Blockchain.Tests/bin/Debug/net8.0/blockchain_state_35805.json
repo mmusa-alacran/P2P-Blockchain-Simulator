@@ -1,0 +1,56 @@
+{
+  "Chain": [
+    {
+      "Index": 0,
+      "Timestamp": 1672531200,
+      "Transactions": [
+        {
+          "From": "system",
+          "To": "Alice",
+          "Amount": 100
+        },
+        {
+          "From": "system",
+          "To": "Bob",
+          "Amount": 50
+        }
+      ],
+      "Nonce": 0,
+      "PreviousHash": "0",
+      "Hash": "99487b7a601195327d5995e7f7cfd8e1756b71d2a940ee10bb9d083110f36559"
+    },
+    {
+      "Index": 1,
+      "Timestamp": 1756335556,
+      "Transactions": [
+        {
+          "From": "Alice",
+          "To": "Bob",
+          "Amount": 2
+        },
+        {
+          "From": "system",
+          "To": "my-miner-address",
+          "Amount": 1
+        }
+      ],
+      "Nonce": 2,
+      "PreviousHash": "99487b7a601195327d5995e7f7cfd8e1756b71d2a940ee10bb9d083110f36559",
+      "Hash": "072449a1358ad87b677544296f62ce0f33546f7b2e16feb6ccb64facd43e7ba4"
+    }
+  ],
+  "Wallets": {
+    "my-miner-address": {
+      "PublicKey": "my-miner-address",
+      "Balance": 1
+    },
+    "Alice": {
+      "PublicKey": "Alice",
+      "Balance": 98
+    },
+    "Bob": {
+      "PublicKey": "Bob",
+      "Balance": 52
+    }
+  }
+}

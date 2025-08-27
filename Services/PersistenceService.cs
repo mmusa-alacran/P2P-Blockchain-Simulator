@@ -1,25 +1,46 @@
-using System.IO;
 using System.Text.Json;
-using System.Threading.Tasks;
 using CsharpBlockchainNode.Models;
 using Microsoft.Extensions.Configuration;
 
 namespace CsharpBlockchainNode.Services;
 
+/// <summary>
+/// Persists the node's chain and wallet snapshot to a JSON file.
+/// Each node writes to a file unique to its bound HTTP port.
+/// </summary>
 public class PersistenceService
 {
     private readonly string _stateFilePath;
 
     public PersistenceService(IConfiguration configuration)
     {
-        // We create a unique filename for each node based on its URL to avoid conflicts.
-        var nodeUrl = Environment.GetEnvironmentVariable("ASPNETCORE_URLS") ?? configuration.GetValue<string>("NodeUrl")!;
-        var port = new System.Uri(nodeUrl).Port;
+        // Respect command-line/host settings first: configuration["urls"] is set by --urls.
+        // Fallback to ASPNETCORE_URLS, then NodeUrl from appsettings, then a default.
+        var urls = configuration["urls"]
+                   ?? Environment.GetEnvironmentVariable("ASPNETCORE_URLS")
+                   ?? configuration.GetValue<string>("NodeUrl")
+                   ?? "http://localhost:5000";
+
+        // If multiple URLs are provided, use the first.
+        var firstUrl = urls.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)[0];
+
+        int port;
+        try
+        {
+            var uri = new Uri(firstUrl);
+            port = uri.IsDefaultPort
+                ? (uri.Scheme.Equals("https", StringComparison.OrdinalIgnoreCase) ? 5001 : 5000)
+                : uri.Port;
+        }
+        catch
+        {
+            port = 5000; // safe fallback if parsing fails
+        }
+
         _stateFilePath = $"blockchain_state_{port}.json";
         Console.WriteLine($"State will be persisted to: {_stateFilePath}");
     }
 
-    /// Saves the current blockchain state to a JSON file.
     public async Task SaveStateAsync(BlockchainState state)
     {
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -27,15 +48,9 @@ public class PersistenceService
         await File.WriteAllTextAsync(_stateFilePath, json);
     }
 
-    /// Loads the blockchain state from a JSON file.
-    /// returns: The loaded state, or null if no state file exists.
     public async Task<BlockchainState?> LoadStateAsync()
     {
-        if (!File.Exists(_stateFilePath))
-        {
-            return null;
-        }
-
+        if (!File.Exists(_stateFilePath)) return null;
         var json = await File.ReadAllTextAsync(_stateFilePath);
         return JsonSerializer.Deserialize<BlockchainState>(json);
     }

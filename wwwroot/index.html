@@ -1,0 +1,137 @@
+<!-- wwwroot/index.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>P2P Blockchain Node</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <style>
+    :root { font-family: system-ui, sans-serif; }
+    body { margin: 24px; max-width: 1100px; }
+    header { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+    input, button, select { padding:8px; font-size:14px; }
+    fieldset { margin:16px 0; padding:12px; border-radius:12px; border:1px solid #ddd; }
+    legend { font-weight:700; padding:0 6px; }
+    .row { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+    .grid { display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+    pre { background:#0f172a; color:#e2e8f0; padding:12px; border-radius:8px; overflow:auto; }
+    .ok { color:#16a34a; }
+    .bad { color:#dc2626; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🧱 P2P Blockchain Node</h1>
+    <span>Base:</span>
+    <input id="baseUrl" size="40"/>
+    <button id="useLocal">Use this origin</button>
+  </header>
+
+  <fieldset>
+    <legend>Node status</legend>
+    <div class="row">
+      <button data-action="healthz">/healthz</button>
+      <button data-action="ready">/ready</button>
+      <button data-action="info">/info</button>
+      <button data-action="wallets">/wallets</button>
+      <button data-action="mempool">/mempool</button>
+      <button data-action="chain">/chain</button>
+    </div>
+    <pre id="outStatus">—</pre>
+  </fieldset>
+
+  <div class="grid">
+    <fieldset>
+      <legend>New transaction</legend>
+      <div class="row">
+        <input id="txFrom" placeholder="from (e.g., Alice)" />
+        <input id="txTo"   placeholder="to (e.g., Bob)" />
+        <input id="txAmt"  type="number" step="1" placeholder="amount (e.g., 2)" />
+        <button id="sendTx">POST /transactions/new</button>
+      </div>
+      <pre id="outTx">—</pre>
+    </fieldset>
+
+    <fieldset>
+      <legend>Mining</legend>
+      <div class="row">
+        <button id="mineBtn">POST /mine</button>
+        <button id="resolveBtn">GET /nodes/resolve</button>
+      </div>
+      <pre id="outMine">—</pre>
+    </fieldset>
+  </div>
+
+  <fieldset>
+    <legend>Peers</legend>
+    <div class="row">
+      <input id="peerUrl" size="50" placeholder="https://your-peer.ngrok-free.app" />
+      <button id="registerPeer">POST /peers/register?url=...</button>
+      <button id="listPeers">GET /peers</button>
+    </div>
+    <pre id="outPeers">—</pre>
+  </fieldset>
+
+  <script>
+  const $ = sel => document.querySelector(sel);
+  const base = $("#baseUrl");
+  base.value = window.location.origin;
+
+  $("#useLocal").onclick = () => base.value = window.location.origin;
+
+  async function call(path, opts={}) {
+    const url = new URL(path, base.value).toString();
+    const res = await fetch(url, { ...opts });
+    const text = await res.text();
+    try { return JSON.parse(text); } catch { return text; }
+  }
+
+  // status buttons
+  document.querySelectorAll('[data-action]').forEach(btn => {
+    btn.onclick = async () => {
+      const data = await call('/' + btn.dataset.action);
+      $("#outStatus").textContent = JSON.stringify(data, null, 2);
+    };
+  });
+
+  // send tx
+  $("#sendTx").onclick = async () => {
+    const body = {
+      from: $("#txFrom").value.trim(),
+      to: $("#txTo").value.trim(),
+      amount: Number($("#txAmt").value)
+    };
+    const data = await call('/transactions/new', {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json' },
+      body: JSON.stringify(body)
+    });
+    $("#outTx").textContent = JSON.stringify(data, null, 2);
+  };
+
+  // mine
+  $("#mineBtn").onclick = async () => {
+    const data = await call('/mine', { method:'POST' });
+    $("#outMine").textContent = JSON.stringify(data, null, 2);
+  };
+
+  // resolve
+  $("#resolveBtn").onclick = async () => {
+    const data = await call('/nodes/resolve');
+    $("#outMine").textContent = JSON.stringify(data, null, 2);
+  };
+
+  // peers
+  $("#registerPeer").onclick = async () => {
+    const url = $("#peerUrl").value.trim();
+    const data = await call('/peers/register?url=' + encodeURIComponent(url), { method:'POST' });
+    $("#outPeers").textContent = JSON.stringify(data, null, 2);
+  };
+
+  $("#listPeers").onclick = async () => {
+    const data = await call('/peers');
+    $("#outPeers").textContent = JSON.stringify(data, null, 2);
+  };
+  </script>
+</body>
+</html>

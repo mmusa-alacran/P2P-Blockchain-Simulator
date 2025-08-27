@@ -1,0 +1,89 @@
+{
+  "Chain": [
+    {
+      "Index": 0,
+      "Timestamp": 1672531200,
+      "Transactions": [
+        {
+          "From": "system",
+          "To": "Alice",
+          "Amount": 100
+        },
+        {
+          "From": "system",
+          "To": "Bob",
+          "Amount": 50
+        }
+      ],
+      "Nonce": 0,
+      "PreviousHash": "0",
+      "Hash": "99487b7a601195327d5995e7f7cfd8e1756b71d2a940ee10bb9d083110f36559"
+    },
+    {
+      "Index": 1,
+      "Timestamp": 1755967029,
+      "Transactions": [
+        {
+          "From": "Alice",
+          "To": "Bob",
+          "Amount": 2
+        },
+        {
+          "From": "system",
+          "To": "my-miner-address",
+          "Amount": 1
+        }
+      ],
+      "Nonce": 11095,
+      "PreviousHash": "99487b7a601195327d5995e7f7cfd8e1756b71d2a940ee10bb9d083110f36559",
+      "Hash": "00034d5fa98ca0c74dfd08b882e909469544828ee2ec4d3e404a6d428dda9e2c"
+    },
+    {
+      "Index": 2,
+      "Timestamp": 1755967029,
+      "Transactions": [
+        {
+          "From": "Alice",
+          "To": "Bob",
+          "Amount": 1
+        },
+        {
+          "From": "system",
+          "To": "my-miner-address",
+          "Amount": 1
+        }
+      ],
+      "Nonce": 1192,
+      "PreviousHash": "00034d5fa98ca0c74dfd08b882e909469544828ee2ec4d3e404a6d428dda9e2c",
+      "Hash": "000929054404479210e2c150164ac4eafa538a20dc4d90b6b24e553fc28bbc9c"
+    },
+    {
+      "Index": 3,
+      "Timestamp": 1755967029,
+      "Transactions": [
+        {
+          "From": "system",
+          "To": "my-miner-address",
+          "Amount": 1
+        }
+      ],
+      "Nonce": 2682,
+      "PreviousHash": "000929054404479210e2c150164ac4eafa538a20dc4d90b6b24e553fc28bbc9c",
+      "Hash": "000c007b078c51dc022960d6b2eb9aff3e52b69322b27c76061e811ccd38f1a5"
+    }
+  ],
+  "Wallets": {
+    "my-miner-address": {
+      "PublicKey": "my-miner-address",
+      "Balance": 3
+    },
+    "Alice": {
+      "PublicKey": "Alice",
+      "Balance": 97
+    },
+    "Bob": {
+      "PublicKey": "Bob",
+      "Balance": 53
+    }
+  }
+}
