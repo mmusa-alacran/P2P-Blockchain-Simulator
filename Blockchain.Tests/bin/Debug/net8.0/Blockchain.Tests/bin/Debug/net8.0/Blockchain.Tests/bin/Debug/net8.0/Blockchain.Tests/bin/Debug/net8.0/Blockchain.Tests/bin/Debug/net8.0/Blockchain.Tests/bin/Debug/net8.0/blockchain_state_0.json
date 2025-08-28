@@ -75,20 +75,39 @@
       "Nonce": 1,
       "PreviousHash": "03e81082fa6f115015ce899e3c351d9c84dc076f99c86b7dadd4927ccd48dbbc",
       "Hash": "024f09522087906875d77449de0eff3cbac0f005780c42069a77f9259752ec29"
+    },
+    {
+      "Index": 4,
+      "Timestamp": 1756335004,
+      "Transactions": [
+        {
+          "From": "Alice",
+          "To": "Bob",
+          "Amount": 2
+        },
+        {
+          "From": "system",
+          "To": "my-miner-address",
+          "Amount": 1
+        }
+      ],
+      "Nonce": 1,
+      "PreviousHash": "024f09522087906875d77449de0eff3cbac0f005780c42069a77f9259752ec29",
+      "Hash": "08a3697d023926c044ab6a39fc99ffedbe7fabbf0faee0bc44b75fa2042fc6ae"
     }
   ],
   "Wallets": {
     "my-miner-address": {
       "PublicKey": "my-miner-address",
-      "Balance": 3
+      "Balance": 4
     },
     "Alice": {
       "PublicKey": "Alice",
-      "Balance": 94
+      "Balance": 92
     },
     "Bob": {
       "PublicKey": "Bob",
-      "Balance": 56
+      "Balance": 58
     }
   }
 }
