@@ -388,5 +388,6 @@ It’s a zero-dependency demo client: quick buttons for health, mining, resolvin
 
 **Why Docker/Compose?**
 To run multiple nodes reliably and reproducibly, with health checks and port mapping, and ship a single image that runs anywhere a container runtime is available. The Dockerfile’s **multi-stage** pattern keeps the runtime image small and fast to start.
+
 ---
 
