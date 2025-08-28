@@ -29,7 +29,6 @@ A compact, educational blockchain simulator with:
 * [Tests](#tests)
 * [Design Notes (what each class does)](#design-notes-what-each-class-does)
 * [Troubleshooting](#troubleshooting)
-* [Why Swagger UI, ngrok, the HTML page, and Docker?](#why-swagger-ui-ngrok-the-html-page-and-docker)
 
 ---
 
